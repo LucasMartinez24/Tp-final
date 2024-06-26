@@ -1,0 +1,71 @@
+<nav>
+  <ul>
+    <li class="primero">PIP</li>
+    <li class="segundo"><fa-icon [icon]="faPersonDigging"></fa-icon></li>
+    <li class="tercero"><fa-icon [icon]="faBars"></fa-icon></li>
+  </ul>
+</nav>
+<div class="container">
+  <div class="rectangulo">
+    <div class="cabezal">
+      <h2>Consultar Listado de cuotas:</h2>
+      <button><fa-icon [icon]="faFilePdf"></fa-icon> Descargar</button>
+    </div>
+    <p>Listado Cuotas:</p>
+    <div class="tabla">
+      <table>
+        <tr>
+          <th>Cuota N°</th>
+          <th>Importe</th>
+          <th>Emisión</th>
+          <th>Vencimiento</th>
+          <th>Estado</th>
+          <th>Intereses</th>
+          <th>Importe Actual</th>
+          <th>Pagar</th>
+        </tr>
+        <tr>
+          <td>Cuota 1</td>
+          <td>$50000</td>
+          <td>08/04/2004</td>
+          <td>06/05/2024</td>
+          <td style="color: rgb(50, 209, 1);">Pagada</td>
+          <td>$0</td>
+          <td>$50000</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Cuota 1</td>
+          <td>$50000</td>
+          <td>08/04/2004</td>
+          <td>06/05/2024</td>
+          <td style="color: rgb(50, 209, 1);">Pagada</td>
+          <td>$0</td>
+          <td>$50000</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Cuota 1</td>
+          <td>$50000</td>
+          <td>08/04/2004</td>
+          <td>06/05/2024</td>
+          <td style="color: red;">Vencida</td>
+          <td>$0</td>
+          <td>$50000</td>
+          <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+          <td>Cuota 1</td>
+          <td>$50000</td>
+          <td>08/04/2004</td>
+          <td>06/05/2024</td>
+          <td style="color: rgb(255, 196, 0);">Pendiente</td>
+          <td>$0</td>
+          <td>$50000</td>
+          <td><input type="checkbox"></td>
+        </tr>
+      </table>
+      <button><fa-icon [icon]="faBarcode"></fa-icon> Pagar</button>
+    </div>
+  </div>
+</div>
