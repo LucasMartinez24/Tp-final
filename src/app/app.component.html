@@ -9,10 +9,10 @@
   <div class="rectangulo">
     <div class="cabezal">
       <h2>Consultar Listado de cuotas:</h2>
-      <button><fa-icon [icon]="faFilePdf"></fa-icon> Descargar</button>
+      <button (click)="downloadPDF()"><fa-icon [icon]="faFilePdf"></fa-icon> Descargar</button>
     </div>
-    <p>Listado Cuotas:</p>
-    <div class="tabla">
+    <p class="list">Listado Cuotas:</p>
+    <div class="tabla" id="tabla-cuotas">
       <table>
         <tr>
           <th>Cuota N°</th>
@@ -22,50 +22,36 @@
           <th>Estado</th>
           <th>Intereses</th>
           <th>Importe Actual</th>
-          <th>Pagar</th>
+          <th class="no-pdf">Pagar</th>
         </tr>
-        <tr>
-          <td>Cuota 1</td>
-          <td>$50000</td>
-          <td>08/04/2004</td>
-          <td>06/05/2024</td>
-          <td style="color: rgb(50, 209, 1);">Pagada</td>
-          <td>$0</td>
-          <td>$50000</td>
-          <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-          <td>Cuota 1</td>
-          <td>$50000</td>
-          <td>08/04/2004</td>
-          <td>06/05/2024</td>
-          <td style="color: rgb(50, 209, 1);">Pagada</td>
-          <td>$0</td>
-          <td>$50000</td>
-          <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-          <td>Cuota 1</td>
-          <td>$50000</td>
-          <td>08/04/2004</td>
-          <td>06/05/2024</td>
-          <td style="color: red;">Vencida</td>
-          <td>$0</td>
-          <td>$50000</td>
-          <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-          <td>Cuota 1</td>
-          <td>$50000</td>
-          <td>08/04/2004</td>
-          <td>06/05/2024</td>
-          <td style="color: rgb(255, 196, 0);">Pendiente</td>
-          <td>$0</td>
-          <td>$50000</td>
-          <td><input type="checkbox"></td>
+        <tr *ngFor="let item of cuotas">
+          <td>Cuota {{item.id}}</td>
+          <td>{{item.importe | currency}}</td>
+          <td>{{item.fechaGeneracion}}</td>
+          <td>{{item.fechaVencimiento}}</td>
+          <td [ngClass]="{'pagada': item.estado === 'Pagada', 'pendiente': item.estado === 'Pendiente', 'vencida': item.estado === 'Vencida'}">{{item.estado}}</td>
+          <td>{{item.interes | currency}}</td>
+          <td>{{item.importeActual | currency}}</td>
+          <td *ngIf="item.check" class="no-pdf"><input (change)="onCheckboxChange($event, item)" type="checkbox"></td>
         </tr>
       </table>
-      <button><fa-icon [icon]="faBarcode"></fa-icon> Pagar</button>
+    </div>
+    <div class="centrar">
+      <button class="boton" (click)="generarReferenciaPago()"><fa-icon [icon]="faBarcode"></fa-icon> Pagar</button>
+    </div>
+  </div>
+  <div class="modal" *ngIf="showModal" [ngClass]="{'open': showModal}">
+    <div class="modal-content">
+      <h2>Detalles de la Referencia de Pago</h2>
+      <p>ID: N°{{ referenciaPago.id }}</p>
+      <p>Cuotas Seleccionadas:</p>
+      <ul>
+        <li *ngFor="let cuota of referenciaPago.cuotas">{{ cuota.id }}- {{cuota.importeActual | currency}} - {{ cuota.estado }}</li>
+      </ul>
+      <div class="botones">
+        <button class="close-button" (click)="generatePdf(referenciaPago)"><fa-icon [icon]="faFilePdf"></fa-icon> Descargar</button>
+        <button class="close-button" (click)="closeModal()"><fa-icon [icon]="faX"></fa-icon> Cerrar</button>
+      </div>
     </div>
   </div>
 </div>

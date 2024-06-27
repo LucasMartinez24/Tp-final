@@ -1,54 +1,63 @@
-.primero{
+.primero {
   font-size: 40px;
   font-weight: 800;
   font-style: normal;
 }
-.segundo,.tercero{
+
+.segundo,
+.tercero {
   font-size: 48px;
 }
-.segundo{
-  color: #054AAB;
+
+.segundo {
+  color: #054aab;
 }
-nav ul{
+
+nav ul {
   display: flex;
   flex-direction: row;
   list-style: none;
   align-items: center;
   justify-content: space-around;
 }
-nav{
+
+nav {
   width: 100%;
 }
-.container{
+
+.container {
   height: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.container .rectangulo{
-  background-color: #054AAB;
+
+.container .rectangulo {
+  background-color: #054aab;
   width: 1300px;
   height: 520px;
   border-radius: 50px;
 }
-.cabezal{
+
+.cabezal {
   height: 100px;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-
 }
-.cabezal h2{
+
+.cabezal h2 {
   color: white;
   font-size: 36px;
   font-weight: 700;
   font-style: normal;
   margin-left: 400px;
 }
-.cabezal button{
+
+.cabezal button {
   margin-left: 60px;
-  background-color: #001A3E;
+  background-color: #001a3e;
   color: white;
   height: 60px;
   width: 206px;
@@ -57,26 +66,29 @@ nav{
   transition: 0.5s;
   cursor: pointer;
 }
-.cabezal button:hover{
+
+.cabezal button:hover {
   scale: 1.03;
 }
-p{
+
+.list {
   color: white;
   font-size: 24px;
   margin-left: 40px;
 }
-.tabla{
+
+.tabla {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   row-gap: 30px;
 }
+
 table {
   width: 90%;
   border-collapse: collapse;
   border-radius: 30px;
-
   background-color: white; /* Fondo de la tabla blanco */
 }
 
@@ -88,25 +100,37 @@ th {
   padding: 8px;
   text-align: center; /* Alineación del texto a la izquierda */
 }
-th:nth-child(1),th:nth-child(8){
+
+th:nth-child(1),
+th:nth-child(8) {
   border-right: none;
   border-left: none;
 }
-td{
+
+td {
   padding: 8px;
   border-right: 2px solid black;
   text-align: center;
 }
-td:nth-child(8){
+
+td:nth-child(8) {
   border: none;
 }
+
 input[type="checkbox"] {
   width: 20px;
   height: 20px;
 }
-.tabla button{
-  margin-left: 60px;
-  background-color: #001A3E;
+
+.centrar {
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boton {
+  background-color: #001a3e;
   color: white;
   height: 60px;
   width: 206px;
@@ -116,6 +140,85 @@ input[type="checkbox"] {
   cursor: pointer;
   text-align: center;
 }
-.tabla button:hover{
+
+.boton:hover {
   scale: 1.03;
+}
+
+.pagada {
+  color: rgb(0, 199, 0);
+}
+
+.pendiente {
+  color: orange;
+}
+
+.vencida {
+  color: red;
+}
+/* En tu archivo CSS */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.modal.open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+}
+
+.modal-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  font-size: 18px;
+}
+
+.modal-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.modal-content ul li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.close-button {
+  background-color: #001a3e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.close-button:hover {
+  background-color: #054aab;
+}
+.botones{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
