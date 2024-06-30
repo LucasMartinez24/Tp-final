@@ -24,12 +24,14 @@
           <th>Importe Actual</th>
           <th class="no-pdf">Pagar</th>
         </tr>
-        <tr *ngFor="let item of cuotas">
+        <tr *ngFor="let item of listadoCuotasEmpresa">
           <td>Cuota {{item.id}}</td>
           <td>{{item.importe | currency}}</td>
-          <td>{{item.fechaGeneracion}}</td>
-          <td>{{item.fechaVencimiento}}</td>
-          <td [ngClass]="{'pagada': item.estado === 'Pagada', 'pendiente': item.estado === 'Pendiente', 'vencida': item.estado === 'Vencida'}">{{item.estado}}</td>
+          <td>{{item.fechaGeneracion | date:"dd MMM yyyy"}}</td>
+          <td>{{item.fechaVencimiento | date:"dd MMM yyyy"}}</td>
+          <td
+            [ngClass]="{'pagada': item.estado === 'Pagada', 'pendiente': item.estado === 'Pendiente', 'vencida': item.estado === 'Vencida'}">
+            {{item.estado}}</td>
           <td>{{item.interes | currency}}</td>
           <td>{{item.importeActual | currency}}</td>
           <td *ngIf="item.check" class="no-pdf"><input (change)="onCheckboxChange($event, item)" type="checkbox"></td>
@@ -37,20 +39,31 @@
       </table>
     </div>
     <div class="centrar">
-      <button class="boton" (click)="generarReferenciaPago()"><fa-icon [icon]="faBarcode"></fa-icon> Pagar</button>
+      <button class="boton" (click)="solicitarGeneracionReferencia()"><fa-icon [icon]="faBarcode"></fa-icon> Pagar</button>
     </div>
   </div>
   <div class="modal" *ngIf="showModal" [ngClass]="{'open': showModal}">
     <div class="modal-content">
-      <h2>Detalles de la Referencia de Pago</h2>
-      <p>ID: N°{{ referenciaPago.id }}</p>
-      <p>Cuotas Seleccionadas:</p>
-      <ul>
-        <li *ngFor="let cuota of referenciaPago.cuotas">{{ cuota.id }}- {{cuota.importeActual | currency}} - {{ cuota.estado }}</li>
-      </ul>
-      <div class="botones">
-        <button class="close-button" (click)="generatePdf(referenciaPago)"><fa-icon [icon]="faFilePdf"></fa-icon> Descargar</button>
-        <button class="close-button" (click)="closeModal()"><fa-icon [icon]="faX"></fa-icon> Cerrar</button>
+      <div *ngIf="referenciaPago && referenciaPago.cuotasSeleccionadas.length >0">
+        <h2>Detalles de la Referencia de Pago</h2>
+        <p>ID: N°{{ referenciaPago.identificador }}</p>
+        <p>Cuotas Seleccionadas:</p>
+        <ul>
+          <li *ngFor="let cuota of referenciaPago.cuotasSeleccionadas">{{ cuota.id }}- {{cuota.importeActual | currency}} - {{
+            cuota.estado }}</li>
+        </ul>
+        <p>Monto total: {{referenciaPago.montoAPagar| currency}}</p>
+        <div class="botones">
+          <button class="close-button" (click)="generatePdf(referenciaPago)"><fa-icon [icon]="faFilePdf"></fa-icon>
+            Descargar</button>
+          <button class="close-button" (click)="closeModal()"><fa-icon [icon]="faX"></fa-icon> Cerrar</button>
+        </div>
+      </div>
+      <div *ngIf="!(referenciaPago && referenciaPago.cuotasSeleccionadas.length >0)">
+        <h2>Selecciona cuotas para generar una referenciaPago</h2>
+          <div class="botones">
+            <button class="close-button" (click)="closeModal()"><fa-icon [icon]="faX"></fa-icon> Cerrar</button>
+          </div>
       </div>
     </div>
   </div>
