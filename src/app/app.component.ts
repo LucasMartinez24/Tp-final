@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { faPersonDigging, faBars, faFilePdf, faBarcode,faX } from '@fortawesome/free-solid-svg-icons';
-import { Cuotas } from './interfaces/cuotas';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { CuotaSocietaria } from './interfaces/cuotas';
+import { DatePipe } from "@angular/common";
+import { ReferenciaPago } from './interfaces/referenciaPago';
 
 @Component({
   selector: 'app-root',
@@ -10,47 +12,25 @@ import { jsPDF } from 'jspdf';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  idEmpresa = 'lol'
   faPersonDigging = faPersonDigging;
   faBars = faBars;
   faFilePdf = faFilePdf;
   faBarcode = faBarcode;
   faX=faX;
-  cuotas: Cuotas[] = [
-    {
-      id: 1,
-      importe: 50000,
-      fechaGeneracion: '08/04/2024',
-      fechaVencimiento: '06/05/2024',
-      estado: 'Pagada',
-      interes: 0,
-      importeActual: 5000,
-      check: false
-    },
-    {
-      id: 2,
-      importe: 50000,
-      fechaGeneracion: '06/05/2024',
-      fechaVencimiento: '10/06/2024',
-      estado: 'Vencida',
-      interes: 907.5,
-      importeActual: 50907.5,
-      check: true
-    },
-    {
-      id: 3,
-      importe: 50000,
-      fechaGeneracion: '10/06/2024',
-      fechaVencimiento: '08/07/2024',
-      estado: 'Pendiente',
-      interes: 0,
-      importeActual: 50000,
-      check: true
-    }
-  ];
-
-  selectedCuotas: any[] = [];
-  referenciaPago: any = null;
+  selectedCuotas: CuotaSocietaria[] = [];
+  referenciaPago: ReferenciaPago | undefined;
   showModal: boolean = false;
+
+  listadoCuotasEmpresa : CuotaSocietaria[] = [];
+
+  constructor(){
+    this.solicitarListadoCuotas(this.idEmpresa)
+  }
+
+  solicitarListadoCuotas(idEmpresaAsociada : string){
+    this.listadoCuotasEmpresa = CuotaSocietaria.buscarCuotasEmpresa(idEmpresaAsociada)
+  }
 
   onCheckboxChange(event: any, cuota: any) {
     if (event.target.checked) {
@@ -63,13 +43,16 @@ export class AppComponent {
     }
   }
 
-  generarReferenciaPago() {
-    this.referenciaPago = {
-      id: this.generarIdAleatorio(),
-      cuotas: this.selectedCuotas
-    };
+  solicitarGeneracionReferencia(){
+    if(!ReferenciaPago.buscarReferenciaActiva(this.idEmpresa)){
+      this.generarReferenciaPago()
+    }
     this.showModal = true;
   }
+  generarReferenciaPago() {
+    this.referenciaPago = new ReferenciaPago(this.idEmpresa,this.selectedCuotas)
+  }
+
   generatePdf(referenciaPago: any) {
     const doc = new jsPDF();
 
@@ -91,6 +74,15 @@ export class AppComponent {
   }
   generarIdAleatorio() {
     return Math.floor(Math.random() * 1000000); // Genera un número aleatorio entre 0 y 999999
+  }
+
+  calcularMontoTotal() : number {
+    let montoTotal = 0;
+    this.selectedCuotas.forEach(cuota => {
+      montoTotal += cuota.importeActual!
+    });
+    console.log(montoTotal);
+    return montoTotal
   }
 
   cerrarModal() {
